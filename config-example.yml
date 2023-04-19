@@ -37,14 +37,18 @@ graphhopper:
       weighting: custom
       custom_model:
         distance_influence: 70
-#      turn_costs: true
-#      u_turn_costs: 60
+      turn_costs: true
+      u_turn_costs: 60
 
-#    - name: bike
-#      # to use the bike vehicle make sure to not ignore cycleways etc., see import.osm.ignored_highways below
-#      vehicle: bike
-#      weighting: custom
-#      custom_model_files: [bike.json, bike_elevation.json]
+    - name: bike
+      # to use the bike vehicle make sure to not ignore cycleways etc., see import.osm.ignored_highways below
+      vehicle: bike
+      weighting: fastest
+
+    - name: foot
+      # to use the bike vehicle make sure to not ignore cycleways etc., see import.osm.ignored_highways below
+      vehicle: foot
+      weighting: fastest
 
   # specify the folder where to find the custom model files - see this folder for more possibilities
   custom_models.directory: custom_models
@@ -56,7 +60,7 @@ graphhopper:
   # profiles with `turn_costs: true` a more elaborate preparation is required (longer preparation time and more memory
   # usage) and the routing will also be slower than with `turn_costs: false`.
   profiles_ch:
-    - profile: car
+    - profile: bike
 
   # Hybrid mode:
   # Similar to speed mode, the hybrid mode (Landmarks, LM) also speeds up routing by doing calculating auxiliary data
@@ -86,7 +90,7 @@ graphhopper:
   # More are: surface,smoothness,max_width,max_height,max_weight,max_weight_except,hgv,max_axle_load,max_length,
   #           hazmat,hazmat_tunnel,hazmat_water,lanes,osm_way_id,toll,track_type,mtb_rating,hike_rating,horse_rating,
   #           country,curvature,average_slope,max_slope
-  # graph.encoded_values: surface,toll,track_type
+  graph.encoded_values: surface,toll,track_type, average_slope, max_slope, footway, cycleway
 
   #### Speed, hybrid and flexible mode ####
 
@@ -105,7 +109,7 @@ graphhopper:
   #### Elevation ####
 
   # To populate your graph with elevation data use SRTM, default is noop (no elevation). Read more about it in docs/core/elevation.md
-  # graph.elevation.provider: srtm
+  graph.elevation.provider: srtm
 
   # default location for cache is /tmp/srtm
   # graph.elevation.cache_dir: ./srtmprovider/
@@ -182,8 +186,8 @@ graphhopper:
   # motorized vehicles. This leads to a smaller and less dense graph, because there are fewer ways (obviously),
   # but also because there are fewer crossings between highways (=junctions).
   # Another typical example is excluding 'motorway', 'trunk' and maybe 'primary' highways for bicycle or pedestrian routing.
-  import.osm.ignored_highways: footway,cycleway,path,pedestrian,steps # typically useful for motorized-only routing
-  # import.osm.ignored_highways: motorway,trunk # typically useful for non-motorized routing
+  #import.osm.ignored_highways: footway,cycleway,path,pedestrian,steps # typically useful for motorized-only routing
+  import.osm.ignored_highways: motorway,trunk # typically useful for non-motorized routing
 
   # configure the memory access, use RAM_STORE for well equipped servers (default and recommended)
   graph.dataaccess.default_type: RAM_STORE

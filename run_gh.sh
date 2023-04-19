@@ -1,0 +1,1 @@
+java -D"dw.graphhopper.datareader.file=provence-alpes-cote-d-azur-latest.osm.pbf" -jar web/target/graphhopper-web-8.0-SNAPSHOT.jar server config-example.yml
